@@ -1,0 +1,10 @@
+{
+  "tech_name": "camera-notes",
+  "version": "1.0.0",
+  "name": "Camera Notes",
+  "summary": "Ghi chú nhanh gắn camera_id — demo CPMOD cho Vision Platform",
+  "publisher_id": "REPLACE_AT_PACK_TIME",
+  "cp_api_version": "1.0.0",
+  "depends": [],
+  "scope": "org"
+}

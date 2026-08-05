@@ -1,0 +1,10 @@
+{
+  "name": "note",
+  "label": "Camera notes",
+  "fields": [
+    { "name": "title", "type": "string", "required": true },
+    { "name": "camera_id", "type": "string", "required": true },
+    { "name": "priority", "type": "string", "required": true },
+    { "name": "body", "type": "text" }
+  ]
+}

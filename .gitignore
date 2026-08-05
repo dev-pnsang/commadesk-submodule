@@ -1,0 +1,6 @@
+keys/
+dist/
+*.cpmod.zip
+package/SIGNATURE
+.DS_Store
+*.pem

@@ -1,0 +1,9 @@
+[
+  {
+    "menu_id": "ext.camera-notes",
+    "title": "Camera Notes",
+    "path": "/dashboard/ext/camera-notes",
+    "icon": "Camera",
+    "required_permission": "menu_m_camera-notes"
+  }
+]

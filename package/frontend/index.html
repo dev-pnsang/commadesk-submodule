@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Camera Notes</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #121a2b;
+      --line: #243049;
+      --text: #e8eef9;
+      --muted: #93a4c3;
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --danger: #fb7185;
+      --ok: #34d399;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(900px 420px at 10% -10%, rgba(56, 189, 248, 0.18), transparent 60%),
+        radial-gradient(700px 380px at 100% 0%, rgba(129, 140, 248, 0.16), transparent 55%),
+        var(--bg);
+      padding: 1.25rem;
+    }
+    header { margin-bottom: 1rem; }
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .sub { color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem; }
+    .layout {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: minmax(260px, 340px) 1fr;
+    }
+    @media (max-width: 840px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: 1rem;
+      backdrop-filter: blur(8px);
+    }
+    form { display: flex; flex-direction: column; gap: 0.55rem; }
+    label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    input, select, textarea, button {
+      font: inherit;
+      border-radius: 0.65rem;
+      border: 1px solid var(--line);
+      background: #0f172a;
+      color: var(--text);
+      padding: 0.55rem 0.7rem;
+    }
+    textarea { min-height: 5rem; resize: vertical; }
+    button {
+      cursor: pointer;
+      background: linear-gradient(90deg, #0ea5e9, #6366f1);
+      border: 0;
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    button.ghost {
+      background: transparent;
+      border: 1px solid var(--line);
+      font-weight: 600;
+      padding: 0.35rem 0.55rem;
+      font-size: 0.75rem;
+    }
+    button.danger { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, var(--line)); }
+    .err { color: var(--danger); font-size: 0.8rem; min-height: 1.1rem; }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .count { font-size: 0.8rem; color: var(--muted); }
+    ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    li {
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      padding: 0.8rem 0.9rem;
+      background: #0d1526;
+    }
+    .row-top { display: flex; justify-content: space-between; gap: 0.75rem; align-items: flex-start; }
+    .title { font-weight: 700; }
+    .meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+    .body { font-size: 0.88rem; margin-top: 0.45rem; white-space: pre-wrap; }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-transform: uppercase;
+    }
+    .badge.high { color: #fecdd3; border-color: #9f1239; background: #4c0519; }
+    .badge.medium { color: #fde68a; border-color: #a16207; background: #422006; }
+    .badge.low { color: #bbf7d0; border-color: #166534; background: #052e16; }
+    .empty { color: var(--muted); font-size: 0.9rem; padding: 1.5rem 0.5rem; text-align: center; }
+  </style>
+  <!-- COMMADESK_EXT_BRIDGE -->
+</head>
+<body>
+  <header>
+    <h1>Camera Notes</h1>
+    <p class="sub">Demo Vision Platform · ghi chú vận hành gắn camera_id (CPMOD)</p>
+  </header>
+
+  <div class="layout">
+    <section class="card">
+      <form id="form">
+        <div>
+          <label for="title">Tiêu đề</label>
+          <input id="title" required maxlength="200" placeholder="VD: Camera cổng chính lệch góc" />
+        </div>
+        <div>
+          <label for="camera_id">Camera ID</label>
+          <input id="camera_id" required maxlength="100" placeholder="cam-01 / UUID" />
+        </div>
+        <div>
+          <label for="priority">Ưu tiên</label>
+          <select id="priority" required>
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div>
+          <label for="body">Nội dung</label>
+          <textarea id="body" maxlength="2000" placeholder="Mô tả ngắn…"></textarea>
+        </div>
+        <button type="submit" id="submitBtn">Thêm ghi chú</button>
+        <div id="err" class="err"></div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="toolbar">
+        <span class="count" id="count">0 ghi chú</span>
+        <button type="button" class="ghost" id="reloadBtn">Làm mới</button>
+      </div>
+      <ul id="list"></ul>
+    </section>
+  </div>
+
+  <script>
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    function badge(priority) {
+      const p = String(priority || 'medium').toLowerCase();
+      const cls = p === 'high' ? 'high' : p === 'low' ? 'low' : 'medium';
+      return `<span class="badge ${cls}">${escapeHtml(p)}</span>`;
+    }
+
+    async function refresh() {
+      const err = document.getElementById('err');
+      const list = document.getElementById('list');
+      const count = document.getElementById('count');
+      err.textContent = '';
+      try {
+        const rows = await window.CommaDeskExt.api.get('note');
+        const data = Array.isArray(rows) ? rows : (rows && rows.data) || [];
+        count.textContent = data.length + ' ghi chú';
+        if (!data.length) {
+          list.innerHTML = '<li class="empty">Chưa có ghi chú — thêm ở form bên trái.</li>';
+          return;
+        }
+        list.innerHTML = data.map((r) => {
+          const id = escapeHtml(r.id || '');
+          return `<li>
+            <div class="row-top">
+              <div>
+                <div class="title">${escapeHtml(r.title || '')} ${badge(r.priority)}</div>
+                <div class="meta">camera: <code>${escapeHtml(r.camera_id || '')}</code></div>
+              </div>
+              <button type="button" class="ghost danger" data-del="${id}">Xóa</button>
+            </div>
+            <div class="body">${escapeHtml(r.body || '')}</div>
+          </li>`;
+        }).join('');
+        list.querySelectorAll('[data-del]').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-del');
+            if (!id || !confirm('Xóa ghi chú này?')) return;
+            try {
+              await window.CommaDeskExt.api.delete('note/' + id);
+              window.CommaDeskExt.toast('success', 'Đã xóa');
+              await refresh();
+            } catch (e) {
+              err.textContent = e.message || String(e);
+              window.CommaDeskExt.toast('error', e.message || 'Lỗi xóa');
+            }
+          });
+        });
+      } catch (e) {
+        err.textContent = e.message || String(e);
+      }
+    }
+
+    document.getElementById('form').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const err = document.getElementById('err');
+      const payload = {
+        title: document.getElementById('title').value.trim(),
+        camera_id: document.getElementById('camera_id').value.trim(),
+        priority: document.getElementById('priority').value,
+        body: document.getElementById('body').value.trim(),
+      };
+      btn.disabled = true;
+      err.textContent = '';
+      try {
+        await window.CommaDeskExt.api.post('note', payload);
+        window.CommaDeskExt.toast('success', 'Đã thêm ghi chú');
+        document.getElementById('form').reset();
+        document.getElementById('priority').value = 'medium';
+        await refresh();
+      } catch (e) {
+        err.textContent = e.message || String(e);
+        window.CommaDeskExt.toast('error', e.message || 'Lỗi');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('reloadBtn').addEventListener('click', () => void refresh());
+    window.CommaDeskExtReady = refresh;
+    if (window.CommaDeskExt && window.CommaDeskExt.getContext) {
+      refresh();
+    }
+  </script>
+</body>
+</html>
