@@ -16,11 +16,17 @@ package/                 ← nội dung gói CPMOD (đóng ZIP cái này)
   models/note.json
   permissions.json
   menus.json
-  frontend/index.html
+  frontend/index.html    ← UI tĩnh (HTML/JS); không cần Next.js
 scripts/
   gen-keypair.mjs        ← tạo khóa ký Ed25519
   pack.mjs               ← đóng + ký → .cpmod.zip
 ```
+
+### Frontend module = static (không bắt buộc Next.js)
+
+UI trong gói chỉ cần HTML/CSS/JS (hoặc Vite/React/Vue… **build ra static** rồi copy vào `package/frontend/`).  
+Platform serve file trong iframe — **không** chạy Next/`next start` của module.  
+Xem: `control-plane/docs/cpmod/HUONG-DAN-BAT-DAU.md` mục **Viết frontend**.
 
 ## Build (đóng gói)
 
