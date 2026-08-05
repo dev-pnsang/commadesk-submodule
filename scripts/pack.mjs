@@ -82,7 +82,30 @@ for (const rel of [...files, 'SIGNATURE']) {
 
 fs.mkdirSync(path.dirname(out), { recursive: true });
 if (fs.existsSync(out)) fs.unlinkSync(out);
-execFileSync('zip', ['-r', '-q', out, '.'], { cwd: staging });
+
+try {
+  execFileSync('zip', ['-r', '-q', out, '.'], { cwd: staging });
+} catch {
+  // Fallback when `zip` CLI is unavailable
+  execFileSync(
+    'python3',
+    [
+      '-c',
+      [
+        'import os, zipfile, sys',
+        'root, out = sys.argv[1], sys.argv[2]',
+        'with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:',
+        '  for dirpath, _, filenames in os.walk(root):',
+        '    for name in filenames:',
+        '      full = os.path.join(dirpath, name)',
+        '      z.write(full, os.path.relpath(full, root))',
+      ].join('\n'),
+      staging,
+      out,
+    ],
+    { stdio: 'inherit' },
+  );
+}
 fs.rmSync(tmp, { recursive: true, force: true });
 
 console.log('Packed', out);
