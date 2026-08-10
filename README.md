@@ -117,9 +117,28 @@ Kết quả: `dist/camera-notes.cpmod.zip` (đổi tên file theo `tech_name` c�
 
 ### 4) Import
 
-1. `/dashboard/module-apps` → **Import ZIP** → chọn file vừa pack
+1. `/dashboard/module-apps` → **Import / Nâng cấp ZIP** → chọn file vừa pack
 2. Mở sidebar module hoặc `/dashboard/ext/<tech_name>`
 3. Gỡ cài: Module Apps → **Gỡ** (có thể drop bảng `m_<tech>_…`)
+
+### 5) Nâng cấp schema (thêm cột / bảng — không cần SQL)
+
+Platform hỗ trợ **upgrade additive**: import lại ZIP cùng `tech_name`, giữ data `m_*`.
+
+1. Sửa `package/models/*.json` — chỉ **thêm** field hoặc thêm file model mới  
+2. Tăng `version` trong `package/module.json` (vd. `1.0.0` → `1.1.0`)  
+3. Pack + ký lại → **Import ZIP** lần nữa trên Module Apps  
+
+| Việc làm | Kết quả trên CommaDesk |
+|----------|-------------------------|
+| Thêm model mới | Tạo bảng `m_<tech>_<model>` nếu chưa có |
+| Thêm field vào model cũ | Thêm cột (data cũ giữ nguyên) |
+| Đổi type field đã có | **Từ chối** — đổi tên model (entity mới) hoặc giữ type cũ |
+| Hạ `version` | **Từ chối** |
+
+Không gỡ cài / drop bảng chỉ để thêm cột. Không viết SQL trong gói.
+
+Chi tiết contract: `docs/cpmod/` trong monorepo control-plane.
 
 ---
 
@@ -130,6 +149,8 @@ Kết quả: `dist/camera-notes.cpmod.zip` (đổi tên file theo `tech_name` c�
 | `publisher không tồn tại` | ZIP còn `publisher_id` giả / sai — pack lại với ID thật từ UI |
 | Chữ ký không hợp lệ | Public key Publisher ≠ keypair dùng để ký — tạo lại Publisher hoặc dùng đúng `private.pem` |
 | Không thấy menu sau import | Gán `menu_m_<tech>` cho role; refresh trang |
+| Nâng cấp bị từ chối (đổi type) | Chỉ được thêm field/model — đổi tên model hoặc giữ type cũ |
+| Nâng cấp bị từ chối (version) | `version` trong `module.json` thấp hơn bản đã cài |
 | Doc `control-plane/docs/...` | Cần monorepo CommaDesk bên cạnh; repo này chỉ chứa source gói CPMOD |
 
 ---
