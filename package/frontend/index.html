@@ -513,7 +513,23 @@ function renderSidebar() {
 // ─── GRID ────────────────────────────────────────────────────────────────────
 function renderGrid() {
   const grid = document.getElementById('cameraGrid');
-  const noEl = document.getElementById('noCameras');
+  let noEl = document.getElementById('noCameras');
+  
+  // recreate noEl if it was destroyed
+  if (!noEl) {
+    noEl = document.createElement('div');
+    noEl.className = 'no-cameras';
+    noEl.id = 'noCameras';
+    noEl.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M15 10l4.553-2.069A1 1 0 0121 8.876v6.248a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+      </svg>
+      <h3>Chưa có camera nào</h3>
+      <p>Thêm camera từ hệ thống HTML5Stream để bắt đầu xem trực tiếp.</p>
+      <button class="btn btn-primary" onclick="openAddModal()">+ Thêm Camera đầu tiên</button>
+    `;
+  }
+
   // destroy old hls
   Object.values(hlsInstances).forEach(h => h.destroy && h.destroy());
   hlsInstances = {};
@@ -524,7 +540,6 @@ function renderGrid() {
     noEl.style.display = 'flex';
     return;
   }
-  noEl.style.display = 'none';
 
   grid.innerHTML = cameras.map(c => `
     <div class="camera-cell" data-id="${c.id}">
@@ -537,6 +552,10 @@ function renderGrid() {
       </div>
     </div>
   `).join('');
+  
+  // Keep the noEl in the DOM but hidden, so we don't lose it
+  noEl.style.display = 'none';
+  grid.appendChild(noEl);
 
   cameras.forEach(c => initPlayer(c));
 }
@@ -658,7 +677,6 @@ document.getElementById('btnSave').addEventListener('click', () => {
 });
 
 function deleteCam(id) {
-  if (!confirm('Xóa camera này?')) return;
   if (hlsInstances[id]) { hlsInstances[id].destroy(); delete hlsInstances[id]; }
   cameras = cameras.filter(c => c.id !== id);
   if (activeCamId === id) activeCamId = null;
