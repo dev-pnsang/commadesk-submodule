@@ -464,13 +464,17 @@ function toast(msg, type = 'success') {
 }
 function buildStreamUrl(cam) {
   const base = (cam.server_url || '').replace(/\/$/, '');
-  const sid  = (cam.stream_id  || '').replace(/^\//, '');
+  let sid  = (cam.stream_id  || '').replace(/^\//, '');
+  
+  if (!sid.startsWith('live/')) {
+    sid = 'live/' + sid;
+  }
+  
   if (cam.protocol === 'flv') {
     return `${base}/${sid}.live.flv`;
   }
   // HLS default
-  const parts = sid.split('/'); // e.g. ["live","1"]
-  return `${base}/${parts.join('/')}.m3u8`;
+  return `${base}/${sid}/hls.m3u8`;
 }
 
 // ─── SIDEBAR ─────────────────────────────────────────────────────────────────
