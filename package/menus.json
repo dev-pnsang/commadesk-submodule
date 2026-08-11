@@ -1,9 +1,9 @@
 [
   {
-    "menu_id": "ext.camera-notes",
-    "title": "Camera Notes",
-    "path": "/dashboard/ext/camera-notes",
-    "icon": "Camera",
-    "required_permission": "menu_m_camera-notes"
+    "menu_id": "ext.aqvision-camera",
+    "title": "Camera Aqvision",
+    "path": "/dashboard/ext/aqvision-camera",
+    "icon": "Video",
+    "required_permission": "menu_m_aqvision-camera"
   }
 ]

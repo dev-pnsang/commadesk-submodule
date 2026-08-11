@@ -1,12 +1,12 @@
 [
   {
-    "code": "menu_m_camera-notes",
-    "name": "Camera Notes",
-    "description": "Xem ghi chú camera (Vision Platform demo)"
+    "code": "menu_m_aqvision-camera",
+    "name": "Camera Aqvision - Xem trực tiếp",
+    "description": "Cho phép xem giao diện camera HLS trực tiếp từ hệ thống HTML5Stream"
   },
   {
-    "code": "menu_m_camera-notes:Write",
-    "name": "Camera Notes - Ghi",
-    "description": "Tạo, sửa, xóa ghi chú camera"
+    "code": "action_m_aqvision-camera_manage",
+    "name": "Camera Aqvision - Quản lý",
+    "description": "Thêm, sửa, xóa nguồn camera HTML5Stream"
   }
 ]

@@ -1,9 +1,9 @@
 {
-  "tech_name": "camera-notes",
+  "tech_name": "aqvision-camera",
   "version": "1.0.0",
-  "name": "Camera Notes",
-  "summary": "Ghi chú nhanh gắn camera_id — demo CPMOD cho Vision Platform",
-  "publisher_id": "REPLACE_AT_PACK_TIME",
+  "name": "Aqvision Camera Viewer",
+  "summary": "Xem trực tiếp camera HLS/FLV từ hệ thống HTML5Stream Aqvision",
+  "publisher_id": "pub-00000000-0000-0000-0000-000000000000",
   "cp_api_version": "1.0.0",
   "depends": [],
   "scope": "org"
