@@ -464,7 +464,10 @@ function toast(msg, type = 'success') {
 }
 function buildStreamUrl(cam) {
   const base = (cam.server_url || '').replace(/\/$/, '');
-  let sid  = (cam.stream_id  || '').replace(/^\//, '');
+  let sid  = (cam.stream_id  || '').trim().replace(/^\//, '');
+  
+  if (sid.startsWith('http://') || sid.startsWith('https://')) return sid;
+  if (sid.includes('.m3u8') || sid.includes('.flv')) return `${base}/${sid}`;
   
   if (!sid.startsWith('live/')) {
     sid = 'live/' + sid;
@@ -473,7 +476,6 @@ function buildStreamUrl(cam) {
   if (cam.protocol === 'flv') {
     return `${base}/${sid}.live.flv`;
   }
-  // HLS default
   return `${base}/${sid}/hls.m3u8`;
 }
 
