@@ -6,7 +6,6 @@
     { "name": "stream_id",  "type": "string",  "required": true,  "label": "Stream ID (VD: live/1)" },
     { "name": "server_url", "type": "string",  "required": true,  "label": "URL máy chủ HTML5Stream (VD: https://media.aqvision.net)" },
     { "name": "token",      "type": "string",  "required": false, "label": "Bearer Token xác thực API" },
-    { "name": "group",      "type": "string",  "required": false, "label": "Nhóm (VD: Khu A, Toà B)" },
-    { "name": "enabled",    "type": "boolean", "required": false, "label": "Kích hoạt" }
+    { "name": "group",      "type": "string",  "required": false, "label": "Nhóm (VD: Khu A, Toà B)" }
   ]
 }
