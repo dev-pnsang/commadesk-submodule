@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "name": "Aqvision Camera Viewer",
   "summary": "Xem trực tiếp camera HLS/FLV từ hệ thống HTML5Stream Aqvision",
-  "publisher_id": "516e4e9ec319258f763958a362af09c14ce6b2a5e1ccf7fceee33e083afb8e54",
+  "publisher_id": "pub-1bc76d06-d58a-4464-b68e-aa1cc77f7166",
   "cp_api_version": "1.0.0",
   "depends": [],
   "scope": "org"
